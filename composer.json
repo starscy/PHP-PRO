@@ -1,0 +1,19 @@
+{
+    "name": "starscy/project",
+    "description": "php pro course",
+    "autoload": {
+        "psr-4": {
+            "Starscy\\Project\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "starscy",
+            "email": "starscy@rambler.ru"
+        }
+    ],
+    "require": {
+        "fakerphp/faker": "^1.21",
+        "roave/security-advisories": "dev-latest"
+    }
+}
