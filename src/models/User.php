@@ -3,28 +3,42 @@
 namespace Starscy\Project\models;
 
 use  Starscy\Project\models\Person\Name;
+use  Starscy\Project\models\UUID;
 
 class User 
 {
     public function __construct(
-        private int $id,
+        private UUID $uuid,
+        private string $username,
         private Name $fullname,
     )
     {
     }
 
-    public function getId():string
+    public function uuid():UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    public function setId($id):User
+    public function setId($uuid):User
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
         return $this;
     }
 
-    public function getName():string
+    public function getUsername():string
+    {
+        return $this->username;
+    }
+
+    public function setUsername($username):string
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+
+    public function getName():Name
     {
         return $this->fullname;
     }

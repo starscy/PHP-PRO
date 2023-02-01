@@ -2,7 +2,7 @@
 
 namespace Starscy\Project\models\Exceptions;
 
-Class UserNotFoundException extends AppException
+class ArgumentException extends AppException
 {
-    
+
 }

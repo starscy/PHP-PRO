@@ -2,26 +2,28 @@
 namespace  Starscy\Project\models\Blog;
 
 use Starscy\Project\models\User;
+use  Starscy\Project\models\UUID;
+use Starscy\Project\models\Blog\Post;
 
 class Comment 
 {
     public function __construct(
-        private int $id,
-        private User $user,
+        private UUID $uuid,
         private Post $post,
+        private User $user,
         private string $text
     )
     {
     }
 
-    public function getId():int
+    public function uuid():UUID
     {
-        return $this->id;
+        return $this->uuid;
     }
 
-    public function setId($id):Comment
+    public function setUuid(string $uuid):Comment
     {
-        $this->id = $id;
+        $this->uuid = $uuid;
         return $this;
     }
 
