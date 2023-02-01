@@ -29,13 +29,15 @@ $commentRepository = new SqliteCommentRepository($pdo);
 
 $faker = Faker\Factory::create('ru_RU');
 
-$command = new CreateUserCommand($userRepository);
+// $command = new CreateUserCommand($userRepository);
 
-try {
-    $command->handle(Arguments::fromArgv($argv));
-} catch (AppException $e) {
-    echo $e->getMessage();
-}
+// try {
+//     $command->handle(Arguments::fromArgv($argv));
+// } catch (AppException $e) {
+//     echo $e->getMessage();
+// }
+
+
 
 $user = new User (
     UUID::random(),
@@ -64,21 +66,22 @@ $userRepository->save($user) ;
 $postRepository->save($post) ;
 $commentRepository->save($comment) ;
 
-$userRepositoryInMem->save($user) ;
-$postRepositoryInMem->save($post) ;
-$commentRepositoryInMem->save($comment) ;
+// $userRepositoryInMem->save($user) ;
+// $postRepositoryInMem->save($post) ;
+// $commentRepositoryInMem->save($comment) ;
 
 
 
 try{
-     $name=$userRepository->get(new UUID ('b695d14c-6a54-4f38-ad14-740c58537d56'));
-     echo $name.PHP_EOL;
-    $login=$userRepository->getUserByLogin('Диана');
-    echo $login;
-    $testPost = $postRepository->getById('bb9ba065-cf7d-4455-b456-81c88f409ecf');
-    echo $testPost.PHP_EOL;
-    $comTest = $commentRepository->getById('bff4c1d7-6a88-4fca-8f48-22f5fb80cef8');
-    echo $comTest;
+    //  $name=$userRepository->get(new UUID ('b695d14c-6a54-4f38-ad14-740c58537d56'));
+    //  echo $name.PHP_EOL;
+    // $login=$userRepository->getUserByLogin('Диана');
+    // echo $login;
+    // $testPost = $postRepository->getById('bb9ba065-cf7d-4455-b456-81c88f409ecf');
+    // echo $testPost.PHP_EOL;
+     $comTest = $commentRepository->get(new UUID('a2932b14-cbe0-4669-a39c-7936eeadc786'));
+     var_damp($comTest);
+
 } catch  (Exception $e) {
     echo $e->getMessage();
 }

@@ -8,6 +8,7 @@ use Starscy\Project\models\UUID;
 use PDO;
 use Starscy\Project\models\Exceptions\PostNotFoundException;
 use Starscy\Project\models\Repositories\Post\PostRepositoryInterface;
+use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 
 class SqlitePostRepository implements PostRepositoryInterface
 {
@@ -46,14 +47,18 @@ class SqlitePostRepository implements PostRepositoryInterface
         $result = $statement->fetch(PDO::FETCH_ASSOC);
         
         if ($result === false){
-            throw new PostNotFoundException("user with id $uuid not found");
+            throw new PostNotFoundException("Cannot find post: $uuid");
         }
-        
+
+        $userRepository = new SqliteUserRepository($this->pdo);
+        $user = $userRepository->get(new UUID($result['author_uuid'])) ;
+
         return new Post(
             new UUID($result['uuid']),
-            $result['author_uuid'],
-            new Name($result['title'], $result['text'])
-            );
+            $user,
+            $result['title'], 
+            $result['text']
+        );
     }
 
 }

@@ -6,6 +6,8 @@ use Starscy\Project\models\Blog\Comment;
 use Starscy\Project\models\UUID;
 use PDO;
 use Starscy\Project\models\Exceptions\CommentNotFoundException;
+use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
+use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 
 class SqliteCommentRepository implements CommentRepositoryInterface
 {
@@ -24,10 +26,10 @@ class SqliteCommentRepository implements CommentRepositoryInterface
         );  
 
         $statement->execute([
-        ':uuid' => (string)$comment->uuid(),
-        ':post_uuid' => (string)$comment->getPost()->uuid(),
-        ':author_uuid'=> (string)$comment->getUser()->uuid(),
-        ':text' => $comment->getText(),
+            ':uuid' => (string)$comment->uuid(),
+            ':post_uuid' => (string)$comment->getPost()->uuid(),
+            ':author_uuid'=> (string)$comment->getUser()->uuid(),
+            ':text' => $comment->getText(),
         ]);
     }
 
@@ -42,15 +44,24 @@ class SqliteCommentRepository implements CommentRepositoryInterface
         ]);
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        
+        print_r($result);
+        die();
         if ($result === false){
-            throw new CommentNotFoundException("user with id $uuid not found");
+            throw new CommentNotFoundException("Cannot find Comment: $uuid");
         }
+
+        $postRepository = new SqlitePostRepository($this->pdo);
+        $post = $postRepository->get(new UUID($result['post_uuid'])) ;
+
+        $userRepository = new SqliteUserRepository($this->pdo);
+        $user = $userRepository->get(
+            new UUID($result['author_uuid'])
+        ) ;
         
         return new Comment(
             new UUID($result['uuid']),
-            $result['post_uuid'],
-            $result['author_uuid'],
+            $post,
+            $user,
             $result['text']
         );
     }
