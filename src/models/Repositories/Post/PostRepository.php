@@ -31,4 +31,9 @@ class PostRepository  implements PostRepositoryInterface
         throw new PostNotFoundException("post with id $uuid not found");
     }
 
+    public function delete(UUID $uuid):void
+    {
+        
+    }
+
 }

@@ -1,0 +1,37 @@
+//GET HTTP://localhost:8001/users/show?username=starscy
+
+
+# POST HTTP://localhost:8001/posts/create
+
+# {
+#     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
+#     "text": "some text2!",
+#     "title": "s!!d 23wssome"
+# }
+
+# POST HTTP://localhost:8001/users/create
+
+# {
+#     "username": "f@ebBoy",
+#     "first_name": "some text2!",
+#     "second_name": "sd 23wssome"
+# }
+
+# POST HTTP://localhost:8001/posts/comment
+
+# {
+#     "post_uuid": "fedd632c-ef1a-4ccc-b2ce-4b6500d73dc9",
+#     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
+#     "text": "Test Comment!",
+# }
+
+# POST HTTP://localhost:8001/users/create
+
+# {
+#     "username":"testUserStasd",
+#     "first_name": "TestVadim",
+#     "second_name": "KaravaevTets",   
+# }
+
+DELETE HTTP://localhost:8001/posts?uuid=595dfc96-0008-401e-8ae6-3a1c99a49050
+

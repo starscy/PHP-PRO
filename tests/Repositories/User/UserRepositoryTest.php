@@ -1,6 +1,6 @@
 <?php
 
-namespace Starscy\Project\models\Repositories\User;
+namespace Starscy\Project\UnitTests\Repositories\User;
 
 use Starscy\Project\models\User;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
