@@ -13,8 +13,18 @@
         }
     ],
     "require": {
+        "symfony/polyfill-uuid": "^1.27",
+        "php-webdriver/webdriver":"1.8.0"
+        
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",     
         "fakerphp/faker": "^1.21",
-        "roave/security-advisories": "dev-latest",
-        "symfony/polyfill-uuid": "^1.27"
+        "phpunit/phpunit": "^9.5",
+        "phpunit/phpunit-selenium": "*",
+        "phpunit/php-code-coverage": "^9.2"    
+    },
+    "scripts": {
+        "test": "phpunit tests --testdox --colors"
     }
 }

@@ -27,10 +27,10 @@ class SqliteUserRepository implements UserRepositoryInterface
         );  
 
         $statement->execute([
-        ':uuid' => (string)$user->uuid(),
-        ':username'=> (string)$user->getUsername(),
-        ':first_name' => $user->getName()->getFirst(),
-        ':second_name' => $user->getName()->getSecond(),
+            ':uuid' => (string)$user->uuid(),
+            ':username'=> (string)$user->getUsername(),
+            ':first_name' => $user->getName()->getFirst(),
+            ':second_name' => $user->getName()->getSecond(),
         ]);
 
     }
@@ -55,7 +55,7 @@ class SqliteUserRepository implements UserRepositoryInterface
             new UUID($result['uuid']),
             $result['username'],
             new Name($result['first_name'], $result['second_name'])
-            );
+        );
     }
 
     public function getByUsername (string $username):User
@@ -72,7 +72,7 @@ class SqliteUserRepository implements UserRepositoryInterface
 
               
         if ($result === false){
-            throw new UserNotFoundException("$username not found");
+            throw new UserNotFoundException("Cannot find user: $username ");
         }
         
         return new User(
