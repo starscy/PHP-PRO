@@ -45,7 +45,7 @@ class CreateUser implements ActionInterface
         $this->userRepository->save($user);
 
         return new SuccessfulResponse([
-            'uuid' => (string)$newPostUuid,
+            'uuid' => (string)$userUuid,
         ]);
     }
 }

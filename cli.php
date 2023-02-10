@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__."/vendor/autoload.php";
 
 use Starscy\Project\models\User;
@@ -15,19 +14,35 @@ use Starscy\Project\models\UUID;
 use Starscy\Project\models\Blog\Post;
 use Starscy\Project\models\Blog\Comment;
 use Starscy\Project\models\Commands\Arguments;
+use Starscy\Project\models\Blog\Like;
+use Starscy\Project\models\Repositories\Likes\SqliteLikesRepository;
 
-$pdo = new PDO('sqlite:'.__DIR__.'/db.sqlite');
 
-$userRepository = new SqliteUserRepository($pdo);
-$postRepository = new SqlitePostRepository($pdo);
-$commentRepository = new SqliteCommentRepository($pdo);
 
-///Im memory ///
- $userRepositoryInMem = new UserRepository($pdo);
- $postRepositoryInMem = new PostRepository($pdo);
- $commentRepositoryInMem = new CommentRepository($pdo);
+// Подключаем файл bootstrap.php
+// и получаем настроенный контейнер
 
-$faker = Faker\Factory::create('ru_RU');
+$container = require __DIR__ . '/bootstrap.php';
+
+// При помощи контейнера создаём команду
+
+ $command = $container->get(CreateUserCommand::class);
+
+try {
+    $command->handle(Arguments::fromArgv($argv));
+} catch (AppException $e) {
+    echo "{$e->getMessage()}\n";
+}
+
+
+// $pdo = new PDO('sqlite:'.__DIR__.'/db.sqlite');
+
+// $userRepository = new SqliteUserRepository($pdo);
+// $postRepository = new SqlitePostRepository($pdo);
+// $commentRepository = new SqliteCommentRepository($pdo);
+// $likesRepository = new SqliteLikesRepository($pdo);
+
+$faker = Faker\Factory::create('ru-Ru');
 
 // $command = new CreateUserCommand($userRepository);
 
@@ -39,52 +54,85 @@ $faker = Faker\Factory::create('ru_RU');
 
 
 
-$user = new User (
-    UUID::random(),
-    explode(" ", $faker->name())[1],
-    new Name (
-        explode(" ", $faker->name())[0], 
-        explode(" ", $faker->name())[2]
-    )
-);
+// $user = new User (
+//     UUID::random(),
+//     explode(" ", $faker->name())[0],
+//     new Name (
+//         explode(" ", $faker->name())[0], 
+//         explode(" ", $faker->name())[1]
+//     )
+// );
 
-$post = new Post (
-    UUID::random(),
-    $user,
-    $faker->text().PHP_EOL."!!!",
-    $faker->text()
-);
 
-$comment = new Comment (
-    UUID::random(),
-    $post,
-    $user,
-    $faker->text()
-);
+// $user2 = new User (
+//     UUID::random(),
+//     explode(" ", $faker->name())[1],
+//     new Name (
+//         explode(" ", $faker->name())[0], 
+//         explode(" ", $faker->name())[1]
+//     )
+// );
+// $userRepository->save($user) ;
 
-$userRepository->save($user) ;
-$postRepository->save($post) ;
-$commentRepository->save($comment) ;
+
+// $post = new Post (
+//     UUID::random(),
+//     $user,
+//     $faker->text().PHP_EOL."!!!",
+//     $faker->text()
+// );
+// $postRepository->save($post) ;
+
+// $comment = new Comment (
+//     UUID::random(),
+//     $post,
+//     $user,
+//     $faker->text()
+// );
+// $commentRepository->save($comment) ;
+
+// $like = new Like( 
+//     UUID::random(),
+//     $post,
+//     $user
+// );
+
+// $like2 = new Like( 
+//     UUID::random(),
+//     $post,
+//     $user2
+// );
+
+// $likesRepository->save($like);
+// $likesRepository->save($like2);
+
+
+// $likes= $likesRepository->getByPostUuid(new UUID('95ad53d2-6512-437d-92a0-f5a430d86c0c'));
+// print_r($likes);
+
+// $login=$userRepository->get('Диана');
+
 
 // $userRepositoryInMem->save($user) ;
+
 // $postRepositoryInMem->save($post) ;
 // $commentRepositoryInMem->save($comment) ;
 
 
 
-try{
+// try{
     //  $name=$userRepository->get(new UUID ('b695d14c-6a54-4f38-ad14-740c58537d56'));
     //  echo $name.PHP_EOL;
     // $login=$userRepository->getUserByLogin('Диана');
     // echo $login;
     // $testPost = $postRepository->getById('bb9ba065-cf7d-4455-b456-81c88f409ecf');
     // echo $testPost.PHP_EOL;
-     $comTest = $commentRepository->get(new UUID('a2932b14-cbe0-4669-a39c-7936eeadc786'));
-     var_damp($comTest);
+    //  $comTest = $commentRepository->get(new UUID('a2932b14-cbe0-4669-a39c-7936eeadc786'));
+    //  var_damp($comTest);
 
-} catch  (Exception $e) {
-    echo $e->getMessage();
-}
+// } catch  (Exception $e) {
+//     echo $e->getMessage();
+// }
 
 // print_r($userRepository->getAllUsers());
 

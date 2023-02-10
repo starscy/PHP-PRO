@@ -7,14 +7,17 @@ use Starscy\Project\Http\Actions\User\FindByUsername;
 use Starscy\Project\Http\Actions\Post\CreatePost;
 use Starscy\Project\Http\Actions\Comment\CreateComment;
 use Starscy\Project\Http\Actions\User\CreateUser;
+use Starscy\Project\Http\Actions\Likes\CreatePostLike;
 use Starscy\Project\Http\Actions\Post\DeletePost;
 use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
 use Starscy\Project\models\Repositories\Comment\SqliteCommentRepository;
 use Starscy\Project\Http\ErrorResponse;
 
+// Подключаем файл bootstrap.php
+// и получаем настроенный контейнер
 
-require_once __DIR__ . '/vendor/autoload.php';
+$container = require __DIR__ . '/bootstrap.php';
 
 // Создаём объект запроса из суперглобальных переменных
 
@@ -23,65 +26,6 @@ $request = new Request(
     $_SERVER, 
     file_get_contents('php://input')
 );
-
-$routes = [
-
-    'GET' => [
-        '/users/show' => new FindByUsername(
-            new SqliteUserRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            )
-        )
-        // Второй маршрут
-
-        // '/posts/show' => new FindByUuid(
-        // new SqlitePostRepository(
-        // new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-        // )
-        // ),
-    ],
-
-
-    'POST' => [
-        '/users/create' => new CreateUser(
-            new SqliteUserRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            )
-        ),
-
-        '/posts/create' => new CreatePost(
-            new SqlitePostRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            ),
-            new SqliteUserRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            )
-        ),
-
-        '/posts/comment' => new CreateComment(
-            new SqliteCommentRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            ),
-            new SqlitePostRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            ),
-            new SqliteUserRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            ),
-        ),
-    ],
-
-    'DELETE' =>[
-
-        '/posts' => new DeletePost(
-            new SqlitePostRepository(
-                new PDO('sqlite:' . __DIR__ . '/db.sqlite')
-            ),
-        ),
-    ],
-    
-
-];
 
 // Получаем данные из объекта запроса
 
@@ -99,24 +43,58 @@ try {
     return;
 }
 
+// Ассоциируем маршруты с именами классов действий,
+// вместо готовых объектов
+
+$routes = [
+
+    'GET' => [
+        '/users/show' => FindByUsername::class,
+        // '/posts/show' => FindByUuid::class,
+
+        // Второй маршрут(вариант без DIContaner)
+
+        // '/posts/show' => new FindByUuid(
+        // new SqlitePostRepository(
+        // new PDO('sqlite:' . __DIR__ . '/db.sqlite')
+        // )
+        // ),
+    ],
+
+    'POST' => [
+        '/users/create' => CreateUser::class,
+        '/posts/create' => CreatePost::class,
+        '/posts/comment' => CreateComment::class,
+        '/posts/fav' => CreatePostLike::class,
+    ],
+
+    'DELETE' =>[
+        '/posts' => DeletePost::class,
+    ],
+];
+
     // Если у нас нет маршрутов  для этого метода
     // отправляем неуспешный ответ
 
 if (!array_key_exists($method, $routes)) {
-    (new ErrorResponse('Not found'))->send();
+    (new ErrorResponse("Route not found: $method $path"))->send();
     return;
 }
 
 // Ищем маршрут среди маршрутов для этого метода
 if (!array_key_exists($path, $routes[$method])) {
-    (new ErrorResponse('Not found'))->send();
+    (new ErrorResponse("Route not found: $method $path"))->send();
     return;
 }
 
+// Получаем имя класса действия для маршрута
 
-    // Выбираем найденное действие
+$actionClassName = $routes[$method][$path];
 
-$action = $routes[$method][$path];
+// С помощью контейнера
+// создаём объект нужного действия
+
+$action = $container->get($actionClassName);
 
 try {
 
@@ -133,5 +111,6 @@ try {
 
     (new ErrorResponse($e->getMessage()))->send();
 }
- 
+
+
 

@@ -6,6 +6,11 @@
             "Starscy\\Project\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Starscy\\Project\\UnitTests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "starscy",

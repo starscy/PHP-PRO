@@ -1,6 +1,6 @@
 <?php
 
-namespace Starscy\Project\Repositories\User;
+namespace Starscy\Project;
 
 use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
