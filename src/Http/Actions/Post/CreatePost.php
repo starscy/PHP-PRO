@@ -14,6 +14,8 @@ use Starscy\Project\models\Repositories\Post\PostRepositoryInterface;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
 use Starscy\Project\models\Repositories\User\UserRepositoryInterface;
 use Starscy\Project\models\UUID;
+use Psr\Log\LoggerInterface;
+use Starscy\Project\Http\Auth\IdentificationInterface;
 
 class CreatePost implements ActionInterface
 {
@@ -22,31 +24,25 @@ class CreatePost implements ActionInterface
     public function __construct(
 
         private PostRepositoryInterface $postsRepository,
-        private UserRepositoryInterface $usersRepository,
+        // private UserRepositoryInterface $usersRepository,
+        private IdentificationInterface $identification,
+        private LoggerInterface $logger,
 
     ) {
     }
 
     public function handle(Request $request): Response
     {
-        // Пытаемся создать UUID пользователя из данных запроса
+       // Идентифицируем пользователя -
+        // автора статьи
 
-        try {
-            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
-        } catch (HttpException | InvalidArgumentException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
-        // Пытаемся найти пользователя в репозитории
-
-        try {
-           $user= $this->usersRepository->get($authorUuid);
-        } catch (UserNotFoundException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
+        $author = $this->identification->user($request);
 
         // Генерируем UUID для новой статьи
             
         $newPostUuid = UUID::random();
+        
+        
 
         try {
             // Пытаемся создать объект статьи
@@ -55,16 +51,19 @@ class CreatePost implements ActionInterface
             $post = new Post(
                 $newPostUuid,
                 // $authorUuid,
-                $user,
+                $author,
                 $request->jsonBodyField('title'),
                 $request->jsonBodyField('text'),
             );
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
-        // Сохраняем новую статью в репозитории
-
+        
         $this->postsRepository->save($post);
+
+        // Логируем UUID новой статьи
+
+        $this->logger->info("Post created: $newPostUuid");
 
         // Возвращаем успешный ответ,
         // содержащий UUID новой статьи

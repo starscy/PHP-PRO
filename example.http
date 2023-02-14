@@ -1,41 +1,40 @@
-# GET HTTP://localhost:8001/users/show?username=starscy
+#GET http://localhost:8001/
+#Cookie: XDEBUG_SESSION=start
 
 
-# POST HTTP://localhost:8001/posts/create
+//GET http://localhost:8001/users/show?username=testUserStasd
 
-# {
-#     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
-#     "text": "s8 feb",
-#     "title": "fbx"
-# }
 
-# POST HTTP://localhost:8001/users/create
+POST http://localhost:8001/posts/create
 
-# {
+ {
+     "author_uuid": "8b1e3d16-023d-41d5-b9e6-87c3b89278d0",
+     "text": "sss",
+     "title": "fbxff"
+ }
 
-# }
 
-# POST HTTP://localhost:8001/posts/comment
-
+# POST http://localhost:8001/posts/comment
+#
 # {
 #     "post_uuid": "fedd632c-ef1a-4ccc-b2ce-4b6500d73dc9",
 #     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
 #     "text": "Test Comment!",
 # }
 
-# POST HTTP://localhost:8001/users/create
+# POST http://localhost:8001/users/create
 
 # {
-#     "username":"testUserStasd",
-#     "first_name":"TestVadim",
+#     "username":"testU",
+#     "first_name":"TVadim",
 #     "second_name":"Robot"
 # }
 
-POST HTTP://localhost:8001/posts/fav
-
-{
-    "author_uuid":"4469d573-f851-4b93-a7a1-b1d43fd235ea",
-    "post_uuid":"715a1b0a-a64b-477d-8c48-b97af81e2380"
-}
+#POST HTTP://localhost:8001/posts/fav
+#
+#{
+#    "author_uuid":"4469d573-f851-4b93-a7a1-b1d43fd235ea",
+#    "post_uuid":"715a1b0a-a64b-477d-8c48-b97af81e2380"
+#}
 // DELETE HTTP://localhost:8001/posts?uuid=311c3a97-8d6f-4334-b0e1-3d01362cdb12
 
