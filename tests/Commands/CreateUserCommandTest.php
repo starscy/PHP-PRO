@@ -12,6 +12,7 @@ use Starscy\Project\models\Repositories\User\UserRepositoryInterface;
 use Starscy\Project\models\User;
 use Starscy\Project\models\UUID;
 use PHPUnit\Framework\TestCase;
+use Starscy\Project\UnitTests\DummyLogger;
 
 /**
  * @covers CreateUserCommandTest
@@ -44,7 +45,9 @@ class CreateUserCommandTest extends TestCase
     {
 
         $command = new CreateUserCommand(
-            new DummyUserRepository()
+            new DummyUserRepository(),
+            // $this->makeUsersRepository(),
+            new DummyLogger(),
             // new CreateUserCommand($this->makeUsersRepository())
         );
 
@@ -57,7 +60,7 @@ class CreateUserCommandTest extends TestCase
 
     public function testItRequiresFirstName(): void
     {
-        $command = new CreateUserCommand($this->makeUsersRepository());
+        $command = new CreateUserCommand($this->makeUsersRepository(),new DummyLogger());
 
         $this->expectException(ArgumentException::class);
         $this->expectExceptionMessage('No such argument: first_name');
@@ -67,7 +70,7 @@ class CreateUserCommandTest extends TestCase
         
     public function testItRequiresLastName(): void
     {
-        $command = new CreateUserCommand($this->makeUsersRepository());
+        $command = new CreateUserCommand($this->makeUsersRepository(),new DummyLogger());
     
         $this->expectException(ArgumentException::class);
         $this->expectExceptionMessage('No such argument: last_name');
@@ -105,7 +108,7 @@ class CreateUserCommandTest extends TestCase
             }
         };
      
-        $command = new CreateUserCommand($userRepository);
+        $command = new CreateUserCommand($userRepository,new DummyLogger());
        
         $command->handle(new Arguments([
             'username' => 'Ivan',

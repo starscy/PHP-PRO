@@ -16,21 +16,24 @@ use Starscy\Project\models\Blog\Comment;
 use Starscy\Project\models\Commands\Arguments;
 use Starscy\Project\models\Blog\Like;
 use Starscy\Project\models\Repositories\Likes\SqliteLikesRepository;
-
-
+use Psr\Log\LoggerInterface;
+use Starscy\Project\models\Exceptions\AppException;
 
 // Подключаем файл bootstrap.php
 // и получаем настроенный контейнер
 
 $container = require __DIR__ . '/bootstrap.php';
 
+
 // При помощи контейнера создаём команду
 
- $command = $container->get(CreateUserCommand::class);
+$logger = $container->get(LoggerInterface::class);  
 
 try {
+    $command = $container->get(CreateUserCommand::class);
     $command->handle(Arguments::fromArgv($argv));
 } catch (AppException $e) {
+    $logger->error($e->getMessage(), ['exception' => $e]);
     echo "{$e->getMessage()}\n";
 }
 

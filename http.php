@@ -13,11 +13,14 @@ use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
 use Starscy\Project\models\Repositories\Comment\SqliteCommentRepository;
 use Starscy\Project\Http\ErrorResponse;
+use Psr\Log\LoggerInterface;
 
 // Подключаем файл bootstrap.php
 // и получаем настроенный контейнер
 
 $container = require __DIR__ . '/bootstrap.php';
+
+$logger = $container->get(LoggerInterface::class);
 
 // Создаём объект запроса из суперглобальных переменных
 
@@ -31,14 +34,16 @@ $request = new Request(
 
 try{
     $path = $request->path();
-} catch (HttpException){
+} catch (HttpException $e){
+    $logger->warning($e->getMessage(), ['exception' => $e]);
     (new ErrorResponse)->send();
     return;
 }
 
 try {
     $method = $request->method();
-} catch (HttpException) {
+} catch (HttpException $e) {
+    $logger->warning($e->getMessage(), ['exception' => $e]);
     (new ErrorResponse)->send();
     return;
 }
@@ -77,13 +82,17 @@ $routes = [
     // отправляем неуспешный ответ
 
 if (!array_key_exists($method, $routes)) {
-    (new ErrorResponse("Route not found: $method $path"))->send();
+    $message = "Route not found: $method $path";
+    $logger->notice($message);
+    (new ErrorResponse($message))->send();
     return;
 }
 
 // Ищем маршрут среди маршрутов для этого метода
 if (!array_key_exists($path, $routes[$method])) {
-    (new ErrorResponse("Route not found: $method $path"))->send();
+    $message = "Route not found: $method $path";
+    $logger->notice($message);
+    (new ErrorResponse($message))->send();
     return;
 }
 
@@ -109,6 +118,7 @@ try {
         // Отправляем неудачный ответ
         // если что-то пошло не так
 
+    $logger->error($e->getMessage(), ['exception' => $e]);
     (new ErrorResponse($e->getMessage()))->send();
 }
 
