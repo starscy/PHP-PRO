@@ -28,7 +28,7 @@ $container = new DIContainer();
     // .. и настраиваем его:
     // 1. подключение к БД
 
-    $container->bind(
+$container->bind(
     PDO::class,
     new PDO('sqlite:' . __DIR__ . $_SERVER['SQLITE_DB_PATH'])
 );

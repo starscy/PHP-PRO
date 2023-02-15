@@ -10,6 +10,7 @@ class User
     public function __construct(
         private UUID $uuid,
         private string $username,
+
         private Name $fullname,
     )
     {

@@ -16,7 +16,10 @@ use Starscy\Project\models\Repositories\Post\PostRepositoryInterface;
 use Starscy\Project\models\UUID;
 use Starscy\Project\models\Exceptions\PostNotFoundException;
 use PHPUnit\Framework\TestCase;
-
+use Starscy\Project\UnitTests\DummyLogger;
+use Starscy\Project\Http\Auth\JsonBodyUsernameIdentification;
+use Starscy\Project\Http\Auth\JsonBodyUuidIdentification;
+use Starscy\Project\Http\Auth\AuthException;
 class CreatePostActionTest extends TestCase
 {
     private function postsRepository(): PostRepositoryInterface
@@ -85,27 +88,69 @@ class CreatePostActionTest extends TestCase
         };
     }
 
+    public function testItReturnsSuccessAnswer(): void
+    {
+        $postsRepositoryStub = $this->createStub(PostRepositoryInterface::class);
+        $authenticationStub = $this->createStub(JsonBodyUsernameIdentification::class);
+
+        $authenticationStub
+            ->method('user')
+            ->willReturn(
+                new User(
+                    new UUID("8b1e3d16-023d-41d5-b9e6-87c3b89278d0"),
+                    'username',
+                    new Name('first', 'last'),
+
+                )
+            );
+
+        $createPost = new CreatePost(
+            $postsRepositoryStub,
+            $authenticationStub,
+            new DummyLogger(),
+        );
+
+        $request = new Request(
+            [],
+            [],
+            '{
+                "title": "lorem",
+                "text": "lorem"
+                }'
+        );
+
+        $actual = $createPost->handle($request);
+
+        $this->assertInstanceOf(
+            SuccessFulResponse::class,
+            $actual
+        );
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
+     * @throws \JsonException
      */
     public function testItReturnsSuccessfulResponse(): void
     {
-        $request = new Request([], [], '{"author_uuid":"10373537-0805-4d7a-830e-22b481b4859c","title":"title","text":"text"}');
+        $request = new Request([], [], '{"author_uuid":"8b1e3d16-023d-41d5-b9e6-87c3b89278d0","title":"title","text":"text"}');
+
+        $authenticationStub = $this->createStub(JsonBodyUuidIdentification::class);
+        $authenticationStub
+            ->method('user')
+            ->willReturn(
+                new User(
+                    new UUID("8b1e3d16-023d-41d5-b9e6-87c3b89278d0"),
+                    'username',
+                    new Name('first', 'last'),
+
+                )
+            );
 
         $postsRepository = $this->postsRepository();
 
-        $usersRepository = $this->usersRepository([
-            new User(
-                new UUID('10373537-0805-4d7a-830e-22b481b4859c'),
-                'username',
-                new Name('name', 'surname'),
-                
-
-            ),
-        ]);
-
-        $action = new CreatePost($usersRepository, $postsRepository);
+        $action = new CreatePost($postsRepository, $authenticationStub, new DummyLogger());
 
         $response = $action->handle($request);
 
@@ -137,19 +182,26 @@ class CreatePostActionTest extends TestCase
      */
     public function testItReturnsErrorResponseIfNotFoundUser(): void
     {
-        $request = new Request([], [], '{"author_uuid":"10373537-0805-4d7a-830e-22b481b4859c","title":"title","text":"text"}');
+        $request = new Request([], [], '{"author_uuid":"8b1e3d16-023d-41d5-b9e6-87c3b89278d0","title":"title","text":"text"}');
 
-        $postsRepository = $this->postsRepository();
-        $usersRepository = $this->usersRepository([]);
+        $postsRepositoryStub = $this->createStub(PostRepositoryInterface::class);
+        $authenticationStub = $this->createStub(JsonBodyUuidIdentification::class);
 
-        $action = new CreatePost($usersRepository, $postsRepository);
+        $authenticationStub
+            ->method('user')
+            ->willThrowException(
+                new AuthException('Cannot find user: 8b1e3d16-023d-41d5-b9e6-87c3b89278d0')
+            );
+
+        $action = new CreatePost($postsRepositoryStub, $authenticationStub, new DummyLogger());
 
         $response = $action->handle($request);
 
-        $this->assertInstanceOf(ErrorResponse::class, $response);
-        $this->expectOutputString('{"success":false,"reason":"Cannot find user: 10373537-0805-4d7a-830e-22b481b4859c"}');
-
         $response->send();
+
+        $this->assertInstanceOf(ErrorResponse::class, $response);
+        $this->expectOutputString('{"success":false,"reason":"Cannot find user: 8b1e3d16-023d-41d5-b9e6-87c3b89278d0"}');
+
     }
 
     /**
@@ -162,15 +214,19 @@ class CreatePostActionTest extends TestCase
         $request = new Request([], [], '{"author_uuid":"10373537-0805-4d7a-830e-22b481b4859c","title":"title"}');
 
         $postsRepository = $this->postsRepository([]);
-        $usersRepository = $this->usersRepository([
-            new User(
-                new UUID('10373537-0805-4d7a-830e-22b481b4859c'),
-                'ivan',
-               new Name('Ivan', 'Nikitin'), 
-            ),
-        ]);
+        $authenticationStub = $this->createStub(JsonBodyUuidIdentification::class);
+        $authenticationStub
+            ->method('user')
+            ->willReturn(
+                new User(
+                    new UUID("10373537-0805-4d7a-830e-22b481b4859c"),
+                    'username',
+                    new Name('first', 'last'),
 
-        $action = new CreatePost($usersRepository, $postsRepository);
+                )
+            );
+
+        $action = new CreatePost($postsRepository, $authenticationStub, new DummyLogger());
 
         $response = $action->handle($request);
 

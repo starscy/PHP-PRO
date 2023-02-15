@@ -30,6 +30,7 @@ $request = new Request(
     file_get_contents('php://input')
 );
 
+
 // Получаем данные из объекта запроса
 
 try{

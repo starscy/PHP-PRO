@@ -54,7 +54,8 @@ class SqliteUserRepository implements UserRepositoryInterface
         return new User(
             new UUID($result['uuid']),
             $result['username'],
-            new Name($result['first_name'], $result['second_name'])
+            new Name($result['first_name'],
+            $result['second_name'])
         );
     }
 
