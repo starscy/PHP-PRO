@@ -34,16 +34,19 @@ class CreateUserCommand
             throw new CommandException("User already exists: $username");
         }
 
-        $uuid =  UUID::random();
-        $this->userRepository->save(new User(
-            $uuid,
+        $user = User::createForm(
             $username,
-            new Name( $arguments->get('first_name'),  $arguments->get('last_name'))
-        ));
+            $arguments->get('password'),
+            new Name(
+                $arguments->get('first_name'),
+                $arguments->get('second_name'))
+        );
+
+        $this->userRepository->save($user);
 
         // Логируем информацию о новом пользователе
         
-        $this->logger->info("User created: $uuid");
+        $this->logger->info("User created: ".$user->uuid());
     }
     
     private function userExists(string $username): bool

@@ -2,7 +2,9 @@
 
 namespace Starscy\Project\Http\Actions\Post;
 
+use Starscy\Project\Http\Auth\AuthenticationInterface;
 use Starscy\Project\Http\Auth\AuthException;
+use Starscy\Project\Http\Auth\TokenAuthenticationInterface;
 use Starscy\Project\models\Exceptions\InvalidArgumentException;
 use Starscy\Project\Http\Actions\ActionInterface;
 use Starscy\Project\models\Exceptions\HttpException;
@@ -15,7 +17,6 @@ use Starscy\Project\models\Exceptions\UserNotFoundException;
 use Starscy\Project\models\Repositories\User\UserRepositoryInterface;
 use Starscy\Project\models\UUID;
 use Psr\Log\LoggerInterface;
-use Starscy\Project\Http\Auth\IdentificationInterface;
 use Starscy\Project\Http\ErrorResponse;
 
 class CreatePost implements ActionInterface
@@ -26,7 +27,7 @@ class CreatePost implements ActionInterface
 
         private PostRepositoryInterface $postsRepository,
         // private UserRepositoryInterface $usersRepository,
-        private IdentificationInterface $identification,
+        private TokenAuthenticationInterface $authentication,
         private LoggerInterface $logger,
 
     ) {
@@ -37,7 +38,7 @@ class CreatePost implements ActionInterface
        // Идентифицируем пользователя -
         // автора статьи
         try{
-            $author = $this->identification->user($request);
+            $author = $this->authentication->user($request);
         } catch (AuthException $e){
             return new ErrorResponse($e->getMessage());
         }

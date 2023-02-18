@@ -19,8 +19,8 @@ class SqliteUserRepository implements UserRepositoryInterface
     public function save(User $user):void
     {
         $statement = $this->pdo->prepare(
-        'INSERT INTO users (uuid,username, first_name, second_name)
-        VALUES (:uuid,:username, :first_name, :second_name)
+        'INSERT INTO users (uuid, username, password, first_name, second_name)
+        VALUES (:uuid,:username,:password, :first_name, :second_name)
         ON CONFLICT (uuid) DO UPDATE SET
             first_name = :first_name,
             second_name = :second_name',
@@ -29,6 +29,7 @@ class SqliteUserRepository implements UserRepositoryInterface
         $statement->execute([
             ':uuid' => (string)$user->uuid(),
             ':username'=> (string)$user->getUsername(),
+            ':password'=>$user->hashedPassword(),
             ':first_name' => $user->getName()->getFirst(),
             ':second_name' => $user->getName()->getSecond(),
         ]);
@@ -54,6 +55,7 @@ class SqliteUserRepository implements UserRepositoryInterface
         return new User(
             new UUID($result['uuid']),
             $result['username'],
+            $result['password'],
             new Name($result['first_name'],
             $result['second_name'])
         );
@@ -79,6 +81,7 @@ class SqliteUserRepository implements UserRepositoryInterface
         return new User(
             new UUID($result['uuid']),
             $result['username'],
+            $result['password'],
             new Name($result['first_name'], $result['second_name'])
             );
 

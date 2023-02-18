@@ -7,14 +7,14 @@
 #GET http://localhost:8001/users/show?username=testUserStasd
 
 
-POST http://localhost:8001/posts/create
-Content-Type: application/json
+#POST http://localhost:8001/posts/create
+#Content-Type: application/json
 
-{
-    "author_uuid": "8b1e3d16-023d-41d5-b9e6-87c3b89278d",
-    "text": "sss",
-    "title": "fbxff"
-}
+#{
+#    "author_uuid": "8b1e3d16-023d-41d5-b9e6-87c3b89278d",
+#    "text": "sss",
+#    "title": "fbxff"
+#}
 
 
 # POST http://localhost:8001/posts/comment
@@ -40,4 +40,31 @@ Content-Type: application/json
 #    "post_uuid":"715a1b0a-a64b-477d-8c48-b97af81e2380"
 #}
 // DELETE HTTP://localhost:8001/posts?uuid=311c3a97-8d6f-4334-b0e1-3d01362cdb12
+
+#POST http://localhost:8001/posts/create
+#Content-Type: application/json
+#
+#{
+#"username": "test4",
+#"password": "234",
+#"text": "some text",
+#"title": "some title"
+#}
+
+#POST http://localhost:8001/login
+#Content-Type: application/json
+#
+#{
+#"username": "Bot1",
+#"password": "234"
+#}
+
+POST http://localhost:8001/posts/create
+Authorization: Bearer 3e269c2218a193b08a324281504798fcd72cdb2b29451c243af0464d6109beef60fb6de3c59602eb
+
+{
+"text": "sss!!",
+"title": "fbxff"
+}
+
 

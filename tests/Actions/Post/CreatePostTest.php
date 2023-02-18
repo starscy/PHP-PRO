@@ -99,6 +99,7 @@ class CreatePostActionTest extends TestCase
                 new User(
                     new UUID("8b1e3d16-023d-41d5-b9e6-87c3b89278d0"),
                     'username',
+                    'password',
                     new Name('first', 'last'),
 
                 )
@@ -143,6 +144,7 @@ class CreatePostActionTest extends TestCase
                 new User(
                     new UUID("8b1e3d16-023d-41d5-b9e6-87c3b89278d0"),
                     'username',
+                    'password',
                     new Name('first', 'last'),
 
                 )
@@ -221,6 +223,7 @@ class CreatePostActionTest extends TestCase
                 new User(
                     new UUID("10373537-0805-4d7a-830e-22b481b4859c"),
                     'username',
+                    'password',
                     new Name('first', 'last'),
 
                 )

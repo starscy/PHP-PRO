@@ -32,6 +32,7 @@ class CreateUser implements ActionInterface
             $user = new User(
                 $userUuid,
                 $request->jsonBodyField('username'),
+                $request->jsonBodyField('password'),
                 new Name (
                     $request->jsonBodyField('first_name'),
                     $request->jsonBodyField('second_name')

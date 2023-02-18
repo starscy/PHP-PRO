@@ -1,5 +1,6 @@
 <?php
 
+use Starscy\Project\Http\Actions\Auth\LogIn;
 use Starscy\Project\Http\Request;
 use Starscy\Project\Http\SuccessfulResponse;
 use Starscy\Project\models\Exceptions\HttpException;
@@ -56,7 +57,7 @@ $routes = [
 
     'GET' => [
         '/users/show' => FindByUsername::class,
-        // '/posts/show' => FindByUuid::class,
+//        '/posts/show' => FindByUuid::class,
 
         // Второй маршрут(вариант без DIContaner)
 
@@ -68,10 +69,12 @@ $routes = [
     ],
 
     'POST' => [
+        '/login' => LogIn::class,
         '/users/create' => CreateUser::class,
         '/posts/create' => CreatePost::class,
         '/posts/comment' => CreateComment::class,
         '/posts/fav' => CreatePostLike::class,
+
     ],
 
     'DELETE' =>[
