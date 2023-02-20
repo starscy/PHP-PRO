@@ -1,6 +1,7 @@
 <?php
 
 use Starscy\Project\Http\Actions\Auth\LogIn;
+use Starscy\Project\Http\Actions\Auth\LogOut;
 use Starscy\Project\Http\Request;
 use Starscy\Project\Http\SuccessfulResponse;
 use Starscy\Project\models\Exceptions\HttpException;
@@ -10,9 +11,6 @@ use Starscy\Project\Http\Actions\Comment\CreateComment;
 use Starscy\Project\Http\Actions\User\CreateUser;
 use Starscy\Project\Http\Actions\Likes\CreatePostLike;
 use Starscy\Project\Http\Actions\Post\DeletePost;
-use Starscy\Project\models\Repositories\User\SqliteUserRepository;
-use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
-use Starscy\Project\models\Repositories\Comment\SqliteCommentRepository;
 use Starscy\Project\Http\ErrorResponse;
 use Psr\Log\LoggerInterface;
 
@@ -70,6 +68,7 @@ $routes = [
 
     'POST' => [
         '/login' => LogIn::class,
+        '/logout' => LogOut::class,
         '/users/create' => CreateUser::class,
         '/posts/create' => CreatePost::class,
         '/posts/comment' => CreateComment::class,

@@ -65,11 +65,11 @@ class SqliteUserRepositoryTest extends TestCase
         // Вызываем метод сохранения пользователя
         $repository->save(
             new User( // Свойства пользователя точно такие,
-            // как и в описании мока
-            new UUID('123e4567-e89b-12d3-a456-426614174000'),
-            'ivan123',
-            '123',
-            new Name('Ivan', 'Nikitin')
+                // как и в описании мока
+                new UUID('123e4567-e89b-12d3-a456-426614174000'),
+                'ivan123',
+                '123',
+                new Name('Ivan', 'Nikitin')
             )
         );
     }

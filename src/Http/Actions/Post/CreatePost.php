@@ -26,7 +26,6 @@ class CreatePost implements ActionInterface
     public function __construct(
 
         private PostRepositoryInterface $postsRepository,
-        // private UserRepositoryInterface $usersRepository,
         private TokenAuthenticationInterface $authentication,
         private LoggerInterface $logger,
 
@@ -47,8 +46,6 @@ class CreatePost implements ActionInterface
         // Генерируем UUID для новой статьи
             
         $newPostUuid = UUID::random();
-        
-        
 
         try {
             // Пытаемся создать объект статьи

@@ -1,70 +1,62 @@
-# GET http://localhost:8001/users/show?username="test"
-# Content-Type: application/json
-
-#Cookie: XDEBUG_SESSION=start
-
-
-#GET http://localhost:8001/users/show?username=testUserStasd
-
-
-#POST http://localhost:8001/posts/create
-#Content-Type: application/json
-
-#{
-#    "author_uuid": "8b1e3d16-023d-41d5-b9e6-87c3b89278d",
-#    "text": "sss",
-#    "title": "fbxff"
-#}
-
-
-# POST http://localhost:8001/posts/comment
-#
-# {
-#     "post_uuid": "fedd632c-ef1a-4ccc-b2ce-4b6500d73dc9",
-#     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
-#     "text": "Test Comment!",
-# }
-
-# POST http://localhost:8001/users/create
+# POST http://localhost:8001/posts/create
+# Accept: application/json
+# Authorization: Bearer c090c48167b248b967c1d43af299449c357d5d7e633f4e7e4d22f632c64c6208fd08f49afe287ac4
 
 # {
-#     "username":"friday",
-#     "first_name":"TVadim",
-#     "second_name":"Robot"
+# "text":"test1",
+# "title":"titleTest1"
 # }
 
-#POST HTTP://localhost:8001/posts/fav
+#POST http://localhost:8001/posts/comment
+#Accept: application/json
+#Authorization: Bearer c090c48167b248b967c1d43af299449c357d5d7e633f4e7e4d22f632c64c6208fd08f49afe287ac4
 #
 #{
-#    "author_uuid":"4469d573-f851-4b93-a7a1-b1d43fd235ea",
-#    "post_uuid":"715a1b0a-a64b-477d-8c48-b97af81e2380"
+#"post_uuid":"91081dcd-9a17-4683-8229-f95832943721",
+#"text":"test  5"
 #}
-// DELETE HTTP://localhost:8001/posts?uuid=311c3a97-8d6f-4334-b0e1-3d01362cdb12
 
-#POST http://localhost:8001/posts/create
-#Content-Type: application/json
+#POST http://localhost:8001/posts/fav
+#Accept: application/json
+#Authorization: Bearer 7c241c500d5271cada0d3dae5c4e821c7308169000637e861ece29cf80851c5511a841dee29dd917
 #
 #{
-#"username": "test4",
-#"password": "234",
-#"text": "some text",
-#"title": "some title"
+#"post_uuid":"91081dcd-9a17-4683-8229-f95832943721",
+#"text":"test  Commet3"
 #}
 
-#POST http://localhost:8001/login
-#Content-Type: application/json
+# POST http://localhost:8001/logout
+# Accept: application/json
+# Authorization: Bearer 7c241c500d5271cada0d3dae5c4e821c7308169000637e861ece29cf80851c5511a841dee29dd917
+
+# {
+# }
+
+# POST http://localhost:8001/login
+# Accept: application/json
+
+# {
+# "username":"Bot1",
+# "password":"234"
+# }
+
+
+
+
+
+# POST http://localhost:8001/posts/create
+# Authorization: Bearer dde792c279f72896ee0d0982bba7382fa72045121ba451f6355bf5d468590c3ab2b8abacbfb10174
+
+# {
+# "text": "sss!!",
+# "title": "test1"
+# }
+
+#POST http://localhost:8001/logout
+#Accept: application/json
+#Authorization: Bearer dde792c279f72896ee0d0982bba7382fa72045121ba451f6355bf5d468590c3ab2b8abacbfb10174
 #
 #{
-#"username": "Bot1",
-#"password": "234"
 #}
-
-POST http://localhost:8001/posts/create
-Authorization: Bearer 3e269c2218a193b08a324281504798fcd72cdb2b29451c243af0464d6109beef60fb6de3c59602eb
-
-{
-"text": "sss!!",
-"title": "fbxff"
-}
 
 

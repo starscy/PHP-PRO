@@ -12,6 +12,7 @@ class SqliteUserRepository implements UserRepositoryInterface
 {
     public function __construct (
        private PDO $pdo,
+
     )
     {
     }

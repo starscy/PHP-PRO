@@ -62,6 +62,7 @@ class SqlitePostRepositoryTest extends TestCase
         $user = new User( 
                 new UUID('123e4567-e89b-12d3-a499-426614174033'),
                 'ivan123',
+                '123',
                 new Name('ivan', 'Nikitin')
         );
 
@@ -86,6 +87,7 @@ class SqlitePostRepositoryTest extends TestCase
             'title' => 'Заголовок',
             'text' => 'Какой-то текст',
              'username' => 'ivan123',
+             'password' =>'123',
              'first_name' => 'Ivan',
              'second_name' => 'Nikitin',
         ]);

@@ -2,10 +2,13 @@
 
 use Starscy\Project\Http\Auth\AuthenticationInterface;
 use Starscy\Project\Http\Auth\BearerTokenAuthentication;
+use Starscy\Project\Http\Auth\JsonBodyUsernameIdentification;
 use Starscy\Project\Http\Auth\PasswordAuthentication;
 use Starscy\Project\Http\Auth\PasswordAuthenticationInterface;
 use Starscy\Project\Http\Auth\TokenAuthenticationInterface;
 use Starscy\Project\models\Container\DIContainer;
+use Starscy\Project\models\Repositories\Comment\CommentRepositoryInterface;
+use Starscy\Project\models\Repositories\Comment\SqliteCommentRepository;
 use Starscy\Project\models\Repositories\Post\PostRepositoryInterface;
 use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
 use Starscy\Project\models\Repositories\Token\AuthTokensRepositoryInterface;
@@ -53,6 +56,11 @@ $container->bind(
     SqliteUserRepository::class
 );
 
+$container->bind(
+    CommentRepositoryInterface::class,
+    SqliteCommentRepository::class
+);
+
 //
 $container->bind(
     LikesRepositoryInterface::class,
@@ -96,6 +104,11 @@ $container->bind(
 $container->bind(
     AuthenticationInterface::class,
     JsonBodyUuidIdentification::class
+);
+
+$container->bind(
+    AuthenticationInterface::class,
+    JsonBodyUsernameIdentification::class
 );
 
 $container->bind(
