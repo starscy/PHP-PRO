@@ -1,6 +1,6 @@
 <?php
 
-namespace Starscy\Project\Repositories\User;
+namespace Starscy\Project\UnitTests\Repositories\User;
 
 use Starscy\Project\models\Repositories\User\SqliteUserRepository;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
@@ -50,6 +50,7 @@ class SqliteUserRepositoryTest extends TestCase
                     // с единственным аргументом - массивом
                     ':uuid' => '123e4567-e89b-12d3-a456-426614174000',
                     ':username' => 'ivan123',
+                    ':password' => '123',
                     ':first_name' => 'Ivan',
                     ':second_name' => 'Nikitin',
         ]);
@@ -64,10 +65,11 @@ class SqliteUserRepositoryTest extends TestCase
         // Вызываем метод сохранения пользователя
         $repository->save(
             new User( // Свойства пользователя точно такие,
-            // как и в описании мока
-            new UUID('123e4567-e89b-12d3-a456-426614174000'),
-            'ivan123',
-            new Name('Ivan', 'Nikitin')
+                // как и в описании мока
+                new UUID('123e4567-e89b-12d3-a456-426614174000'),
+                'ivan123',
+                '123',
+                new Name('Ivan', 'Nikitin')
             )
         );
     }
@@ -80,6 +82,7 @@ class SqliteUserRepositoryTest extends TestCase
         $statementMock->method('fetch')->willReturn([
             'uuid' => '6ca3e4a4-11f3-4dfc-972a-960c9034af8f',
             'username' => '	Пётр',
+            'password' => '123',
             'first_name' => 'Быков',
             'second_name' => 'Крюков',
         ]);

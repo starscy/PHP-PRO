@@ -55,7 +55,10 @@ class CreateUserCommandTest extends TestCase
     
         $this->expectExceptionMessage('User already exists: Ivan'); 
 
-        $command->handle(new Arguments(['username' => 'Ivan']));
+        $command->handle(new Arguments([
+            'username' => 'Ivan',
+            'password' => '123'
+        ]));
     }
 
     public function testItRequiresFirstName(): void
@@ -65,7 +68,10 @@ class CreateUserCommandTest extends TestCase
         $this->expectException(ArgumentException::class);
         $this->expectExceptionMessage('No such argument: first_name');
 
-        $command->handle(new Arguments(['username' => 'Ivan']));
+        $command->handle(new Arguments([
+            'username' => 'Ivan',
+            'password' => '123'
+        ]));
     }
         
     public function testItRequiresLastName(): void
@@ -73,11 +79,12 @@ class CreateUserCommandTest extends TestCase
         $command = new CreateUserCommand($this->makeUsersRepository(),new DummyLogger());
     
         $this->expectException(ArgumentException::class);
-        $this->expectExceptionMessage('No such argument: last_name');
+        $this->expectExceptionMessage('No such argument: second_name');
 
         $command->handle(new Arguments([
                 'username' => 'Ivan',
                 'first_name' => 'Ivan',
+                'password' => '123'
         ]));
     }
 
@@ -113,7 +120,8 @@ class CreateUserCommandTest extends TestCase
         $command->handle(new Arguments([
             'username' => 'Ivan',
             'first_name' => 'Ivan',
-            'last_name' => 'Nikitin',
+            'second_name' => 'Nikitin',
+            'password' => '123'
         ]));
 
         $this->assertTrue($userRepository->wasCalled());

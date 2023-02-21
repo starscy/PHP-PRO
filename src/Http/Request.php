@@ -76,6 +76,7 @@ class Request
     public function jsonBodyField(string $field): mixed
     {
         $data = $this->jsonBody();
+
         if (!array_key_exists($field, $data)) {
             throw new HttpException("No such field: $field");
         }

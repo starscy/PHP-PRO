@@ -12,6 +12,7 @@ use Starscy\Project\models\UUID;
 use  Starscy\Project\models\Person\Name;
 use  Starscy\Project\models\User;
 use PHPUnit\Framework\TestCase;
+use Starscy\Project\UnitTests\DummyLogger;
 
 /**
  * @covers SqliteCommentRepositoryTest
@@ -30,7 +31,7 @@ class SqliteCommentRepositoryTest extends TestCase
         $connectionStub->method('prepare')->willReturn(
             $statementStub       
         );
-        $repository = new SqliteCommentRepository($connectionStub);
+        $repository = new SqliteCommentRepository($connectionStub, new DummyLogger());
 
         $this->expectException(CommentNotFoundException::class);
         $this->expectExceptionMessage('Cannot find Comment: 123e4567-e89b-12d3-a499-426614174999');
@@ -39,7 +40,7 @@ class SqliteCommentRepositoryTest extends TestCase
 
     }
 
-    public function testItSavesUserToDatabase(): void
+    public function testItSavesCommentToDatabase(): void
     {
         $connectionStub = $this->createStub(PDO::class);
 
@@ -57,12 +58,13 @@ class SqliteCommentRepositoryTest extends TestCase
 
         $connectionStub->method('prepare')->willReturn($statementMock);
 
-        $repository = new SqliteCommentRepository($connectionStub);
+        $repository = new SqliteCommentRepository($connectionStub,new DummyLogger());
 
         
         $user = new User( 
                 new UUID('123e4567-e89b-12d3-a499-426614174033'),
                 'ivan123',
+                'password',
                 new Name('ivan', 'Nikitin')
         );
 
@@ -78,7 +80,7 @@ class SqliteCommentRepositoryTest extends TestCase
                 new UUID('000e4567-e89b-12d3-a499-426614174033'),
                 $post,
                 $user,
-                "Comment test"        
+                "Comment test",
             )
         );
     }
@@ -93,16 +95,12 @@ class SqliteCommentRepositoryTest extends TestCase
             'post_uuid' => 'e7efba0a-bef9-42e7-8873-8d916c275a0b',
             'author_uuid' => '6ca3e4a4-11f3-4dfc-972a-960c9034af8f',
             'text' => 'Заголовок',
-            // 'text' => 'Какой-то текст',
-            // 'username' => 'ivan123',
-            // 'first_name' => 'Ivan',
-            // 'second_name' => 'Nikitin',
         ]);
 
         $connectionStub->method('prepare')->willReturn($statementMock);
 
-        $commentRepository = new SqliteCommentRepository($connectionStub);
-        $comment = $commentRepository->get(new UUID        ('a2932b14-cbe0-4669-a39c-7936eeadc786'));
+        $commentRepository = new SqliteCommentRepository($connectionStub,new DummyLogger());
+        $comment = $commentRepository->get(new UUID('a2932b14-cbe0-4669-a39c-7936eeadc786'));
 
         $this->assertSame('a2932b14-cbe0-4669-a39c-7936eeadc786', (string)$comment->uuid());
     }

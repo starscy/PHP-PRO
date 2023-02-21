@@ -2,6 +2,8 @@
 
 namespace Starscy\Project\Http\Actions\Comment;
 
+use Starscy\Project\Http\Auth\AuthException;
+use Starscy\Project\Http\Auth\TokenAuthenticationInterface;
 use Starscy\Project\models\Exceptions\InvalidArgumentException;
 use Starscy\Project\Http\Actions\ActionInterface;
 use Starscy\Project\Http\ErrorResponse;
@@ -14,7 +16,6 @@ use Starscy\Project\models\Blog\Comment;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
 use Starscy\Project\models\Exceptions\PostNotFoundException;
 use Starscy\Project\models\Exceptions\CommentNotFoundException;
-use Starscy\Project\models\Repositories\User\UserRepositoryInterface;
 use Starscy\Project\models\Repositories\Comment\CommentRepositoryInterface;
 use Starscy\Project\models\Repositories\Post\PostRepositoryInterface;
 use Starscy\Project\models\UUID;
@@ -27,40 +28,33 @@ class CreateComment implements ActionInterface
 
         private CommentRepositoryInterface $commentsRepository,
         private PostRepositoryInterface $postsRepository,
-        private UserRepositoryInterface $usersRepository,
+        private TokenAuthenticationInterface $authentication,
 
     ) {
     }
 
     public function handle(Request $request): Response
     {
-        try {
-            $postUuid = new UUID($request->jsonBodyField('post_uuid'));
-        } catch (HttpException | InvalidArgumentException $e) {
+//        var_dump($request->jsonBodyField('text'));
+        try{
+            $author = $this->authentication->user($request);
+        } catch (AuthException $e){
             return new ErrorResponse($e->getMessage());
         }
 
         try {
-            $post=$this->postRepository->get($postUuid);
+            $postUuid = $request->JsonBodyField('post_uuid');
+        } catch (HttpException $e) {
+            return new ErrorResponse($e->getMessage());
+        }
+
+
+        try {
+            $post=$this->postsRepository->get(new UUID("$postUuid"));
         } catch (PostNotFoundException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
-        // Пытаемся создать UUID пользователя из данных запроса
-
-        try {
-            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
-        } catch (HttpException | InvalidArgumentException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
-        // Пытаемся найти пользователя в репозитории
-
-        try {
-           $user= $this->usersRepository->get($authorUuid);
-        } catch (UserNotFoundException $e) {
-            return new ErrorResponse($e->getMessage());
-        }
-            
         $commentUuid = UUID::random();
 
         try {
@@ -70,7 +64,7 @@ class CreateComment implements ActionInterface
             $comment = new Comment(
                 $commentUuid,
                 $post,
-                $user,
+                $author,
                 $request->jsonBodyField('text'),
             );
         } catch (HttpException $e) {

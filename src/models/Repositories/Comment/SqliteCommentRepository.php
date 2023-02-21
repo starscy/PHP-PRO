@@ -2,6 +2,7 @@
 
 namespace Starscy\Project\models\Repositories\Comment;
 
+use Psr\Log\LoggerInterface;
 use Starscy\Project\models\Blog\Comment;
 use Starscy\Project\models\UUID;
 use PDO;
@@ -13,6 +14,7 @@ class SqliteCommentRepository implements CommentRepositoryInterface
 {
     public function __construct (
        private PDO $pdo,
+       private LoggerInterface $logger,
     )
     {
     }
@@ -31,6 +33,8 @@ class SqliteCommentRepository implements CommentRepositoryInterface
             ':author_uuid'=> (string)$comment->getUser()->uuid(),
             ':text' => $comment->getText(),
         ]);
+
+        $this->logger->info("Comment created:". $comment->getText());
     }
 
     public function get(UUID $uuid):Comment
@@ -44,8 +48,7 @@ class SqliteCommentRepository implements CommentRepositoryInterface
         ]);
 
         $result = $statement->fetch(PDO::FETCH_ASSOC);
-        print_r($result);
-        die();
+
         if ($result === false){
             throw new CommentNotFoundException("Cannot find Comment: $uuid");
         }

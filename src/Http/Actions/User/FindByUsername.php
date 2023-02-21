@@ -4,7 +4,7 @@ namespace Starscy\Project\Http\Actions\User;
 
 use Starscy\Project\Http\Actions\ActionInterface;
 use Starscy\Project\Http\ErrorResponse;
-use Starscy\Project\Http\HttpException;
+use Starscy\Project\models\Exceptions\HttpException;
 use Starscy\Project\Http\Request;
 use Starscy\Project\Http\Response;
 use Starscy\Project\Http\SuccessfulResponse;

@@ -3,6 +3,9 @@
 namespace Actions;
 
 use Starscy\Project\Http\ErrorResponse;
+use Starscy\Project\models\Commands\Arguments;
+use Starscy\Project\models\Commands\CreateUserCommand;
+use Starscy\Project\models\Exceptions\ArgumentException;
 use Starscy\Project\models\Exceptions\JsonException;
 use Starscy\Project\Http\Actions\User\CreateUser;
 use Starscy\Project\Http\Request;
@@ -13,6 +16,7 @@ use Starscy\Project\models\User;
 use Starscy\Project\models\Exceptions\UserNotFoundException;
 use Starscy\Project\models\UUID;
 use PHPUnit\Framework\TestCase;
+use Starscy\Project\UnitTests\DummyLogger;
 
 class CreateUserTest extends TestCase
 {
@@ -53,7 +57,7 @@ class CreateUserTest extends TestCase
      */
     public function testItReturnsSuccessfulResponse(): void
     {
-        $request = new Request([], [], '{"username":"TestUser","first_name":"Test","second_name":"Robot"}');
+        $request = new Request([], [], '{"username":"TestUser","password":"123", "first_name":"Test","second_name":"Robot"}');
 
         $usersRepository = $this->usersRepository();
 
@@ -81,6 +85,19 @@ class CreateUserTest extends TestCase
 
 
         $response->send();
+    }
+
+    public function testItRequiresPassword(): void
+    {
+        $command = new CreateUserCommand(
+            $this->usersRepository(),
+            new DummyLogger()
+        );
+        $this->expectException(ArgumentException::class);
+        $this->expectExceptionMessage('No such argument: password');
+        $command->handle(new Arguments([
+            'username' => 'Ivan',
+        ]));
     }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Starscy\Project\UnitTests\Repositories\User;
+namespace Repositories\User;
 
 use PHPUnit\Framework\TestCase;
 

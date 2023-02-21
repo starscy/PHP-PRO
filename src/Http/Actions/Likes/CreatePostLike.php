@@ -2,6 +2,8 @@
 
 namespace Starscy\Project\Http\Actions\Likes;
 
+use Starscy\Project\Http\Auth\AuthException;
+use Starscy\Project\Http\Auth\TokenAuthenticationInterface;
 use Starscy\Project\models\Exceptions\InvalidArgumentException;
 use Starscy\Project\Http\Actions\ActionInterface;
 use Starscy\Project\Http\ErrorResponse;
@@ -25,7 +27,8 @@ class CreatePostLike implements ActionInterface
 
         private LikesRepositoryInterface $likesRepository,
         private PostRepositoryInterface $postsRepository,
-        private UserRepositoryInterface $usersRepository,
+        private TokenAuthenticationInterface $authentication,
+//        private UserRepositoryInterface $usersRepository,
 
 
     ) {
@@ -35,17 +38,23 @@ class CreatePostLike implements ActionInterface
     {
         // Пытаемся создать UUID пользователя из данных запроса
 
+        try{
+            $author = $this->authentication->user($request);
+        } catch (AuthException $e){
+            return new ErrorResponse($e->getMessage());
+        }
+
         try {
-            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
+//            $authorUuid = new UUID($request->jsonBodyField('author_uuid'));
             $postUuid = new UUID($request->jsonBodyField('post_uuid'));
-            
+            $post= $this->postsRepository->get($postUuid);
         } catch (HttpException | InvalidArgumentException $e) {
             return new ErrorResponse($e->getMessage());
         }
         
         try {
-            $user= $this->usersRepository->get($authorUuid);
-            $post= $this->postsRepository->get($postUuid);
+//            $user= $this->usersRepository->get($authorUuid);
+
 
         } catch (HttpException | InvalidArgumentException $e) {
             return new ErrorResponse($e->getMessage());
@@ -57,13 +66,13 @@ class CreatePostLike implements ActionInterface
             $like = new Like(
                 $likeUuid,
                 $post,
-                $user
+                $author
             );
         } catch (HttpException $e) {
             return new ErrorResponse($e->getMessage());
         }
 
-        $this->likesRepository->checkIfPostBeenLikedByUser($postUuid,$authorUuid);
+        $this->likesRepository->checkIfPostBeenLikedByUser($postUuid,$author->uuid());
 
         $this->likesRepository->save($like);
 
