@@ -19,7 +19,7 @@ use Starscy\Project\UnitTests\DummyLogger;
  */
 
 
-class CreateUserCommandTest extends TestCase
+class CreateMyUserCommandTest extends TestCase
 {
     private function makeUsersRepository(): UserRepositoryInterface
     {

@@ -64,13 +64,20 @@ class SqlitePostRepository implements PostRepositoryInterface
 
     public function delete(UUID $uuid):void
     {
-        $statement = $this->pdo->prepare(
-        'DELETE FROM posts WHERE uuid = :uuid'
-        );  
+        try {
+            $statement = $this->pdo->prepare(
+                'DELETE FROM posts WHERE uuid = :uuid'
+            );
+            $statement->execute([
+                ':uuid' => (string)$uuid,
+            ]);
+        } catch (\PDOException $e){
+            throw new PostsRepositoryException(
+                $e->getMessage(), (int)$e->getCode(), $e
+            );
+        }
 
-        $statement->execute([
-        ':uuid' => (string)$uuid,
-        ]);
+
     }
 
 }

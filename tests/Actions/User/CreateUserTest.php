@@ -1,6 +1,6 @@
 <?php
 
-namespace Actions;
+namespace Actions\User;
 
 use Starscy\Project\Http\ErrorResponse;
 use Starscy\Project\models\Commands\Arguments;

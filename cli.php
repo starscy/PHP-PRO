@@ -1,41 +1,44 @@
 <?php
 require_once __DIR__."/vendor/autoload.php";
 
-use Starscy\Project\models\User;
-use Starscy\Project\models\Repositories\Post\SqlitePostRepository;
-use Starscy\Project\models\Repositories\User\SqliteUserRepository;
-use Starscy\Project\models\Repositories\Comment\SqliteCommentRepository;
-use Starscy\Project\models\Repositories\Post\PostRepository;
-use Starscy\Project\models\Repositories\User\UserRepository;
-use Starscy\Project\models\Repositories\Comment\CommentRepository;
-use Starscy\Project\models\Commands\CreateUserCommand;
-use Starscy\Project\models\Person\Name;
-use Starscy\Project\models\UUID;
-use Starscy\Project\models\Blog\Post;
-use Starscy\Project\models\Blog\Comment;
-use Starscy\Project\models\Commands\Arguments;
-use Starscy\Project\models\Blog\Like;
-use Starscy\Project\models\Repositories\Likes\SqliteLikesRepository;
-use Psr\Log\LoggerInterface;
-use Starscy\Project\models\Exceptions\AppException;
-
-// Подключаем файл bootstrap.php
-// и получаем настроенный контейнер
+use Starscy\Project\models\Commands\FakeData\PopulateDB;
+use Starscy\Project\models\Commands\Post\DeletePost;
+use Starscy\Project\models\Commands\User\CreateUser;
+use Starscy\Project\models\Commands\User\UpdateUser;
+use Symfony\Component\Console\Application;
 
 $container = require __DIR__ . '/bootstrap.php';
 
+$application = new Application();
 
-// При помощи контейнера создаём команду
+$commandsClasses = [
+    CreateUser::class,
+    UpdateUser::class,
+    DeletePost::class,
+    PopulateDB::class,
+];
 
-$logger = $container->get(LoggerInterface::class);  
-
-try {
-    $command = $container->get(CreateUserCommand::class);
-    $command->handle(Arguments::fromArgv($argv));
-} catch (AppException $e) {
-    $logger->error($e->getMessage(), ['exception' => $e]);
-    echo "{$e->getMessage()}\n";
+foreach ($commandsClasses as $commandClass) {
+// Посредством контейнера
+// создаём объект команды
+    $command = $container->get($commandClass);
+// Добавляем команду к приложению
+    $application->add($command);
 }
+// Запускаем приложение
+$application->run();
+
+//$logger = $container->get(LoggerInterface::class);
+
+
+//
+//try {
+//    $command = $container->get(CreateUserCommand::class);
+//    $command->handle(Arguments::fromArgv($argv));
+//} catch (AppException $e) {
+//    $logger->error($e->getMessage(), ['exception' => $e]);
+//    echo "{$e->getMessage()}\n";
+//}
 
 
 // $pdo = new PDO('sqlite:'.__DIR__.'/db.sqlite');
@@ -45,7 +48,7 @@ try {
 // $commentRepository = new SqliteCommentRepository($pdo);
 // $likesRepository = new SqliteLikesRepository($pdo);
 
-$faker = Faker\Factory::create('ru-Ru');
+//$faker = Faker\Factory::create('ru-Ru');
 
 // $command = new CreateUserCommand($userRepository);
 
