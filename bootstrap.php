@@ -1,5 +1,10 @@
 <?php
 
+use Dotenv\Dotenv;
+use Faker\Provider\ru_RU\Internet;
+use Faker\Provider\Lorem;
+use Faker\Provider\ru_RU\Person;
+use Faker\Provider\ru_RU\Text;
 use Starscy\Project\Http\Auth\AuthenticationInterface;
 use Starscy\Project\Http\Auth\BearerTokenAuthentication;
 use Starscy\Project\Http\Auth\JsonBodyUsernameIdentification;
@@ -22,34 +27,33 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Starscy\Project\Http\Auth\JsonBodyUuidIdentification;
 
-// Подключаем автозагрузчик Composer
-
 require_once __DIR__ . '/vendor/autoload.php';
 
-// Загружаем переменные окружения из файла .env
-
-\Dotenv\Dotenv::createImmutable(__DIR__)->safeLoad();
-
-// Создаём объект контейнера ..
+Dotenv::createImmutable(__DIR__)->safeLoad();
 
 $container = new DIContainer();
 
-    // .. и настраиваем его:
-    // 1. подключение к БД
+$faker= new \Faker\Generator();
+
+$faker->addProvider(new Person($faker));
+$faker->addProvider(new Text($faker));
+$faker->addProvider(new Internet($faker));
+$faker->addProvider(new Lorem($faker));
+
+$container->bind(
+    \Faker\Generator::class,
+    $faker
+);
 
 $container->bind(
     PDO::class,
     new PDO('sqlite:' . __DIR__ . $_SERVER['SQLITE_DB_PATH'])
 );
 
-// 2. репозиторий статей
-
 $container->bind(
     PostRepositoryInterface::class,
     SqlitePostRepository::class
 );
-
-// 3. репозиторий пользователей
 
 $container->bind(
     UserRepositoryInterface::class,
@@ -61,17 +65,14 @@ $container->bind(
     SqliteCommentRepository::class
 );
 
-//
 $container->bind(
     LikesRepositoryInterface::class,
     SqliteLikesRepository::class
 );
 
-$logger = (new Logger('blog'));
+//logger
 
-    // Включаем логирование в файлы,
-    // если переменная окружения LOG_TO_FILES
-    // содержит значение 'yes'
+$logger = (new Logger('blog'));
 
 if ('yes' === $_SERVER['LOG_TO_FILES']) {
     $logger
@@ -85,16 +86,14 @@ if ('yes' === $_SERVER['LOG_TO_FILES']) {
         ));
 }
 
-    // Включаем логирование в консоль,
-    // если переменная окружения LOG_TO_CONSOLE
-    // содержит значение 'yes'
-
 if ('yes' === $_SERVER['LOG_TO_CONSOLE']) {
     $logger
     ->pushHandler(
     new StreamHandler("php://stdout")
     );
 }
+
+/////
 
 $container->bind(
     LoggerInterface::class,
