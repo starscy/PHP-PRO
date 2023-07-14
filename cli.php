@@ -31,11 +31,11 @@ $faker = Faker\Factory::create('ru_RU');
 
 $command = new CreateUserCommand($userRepository);
 
-try {
-    $command->handle(Arguments::fromArgv($argv));
-} catch (AppException $e) {
-    echo $e->getMessage();
-}
+//try {
+//    $command->handle(Arguments::fromArgv($argv));
+//} catch (AppException $e) {
+//    echo $e->getMessage();
+//}
 
 $user = new User (
     UUID::random(),
@@ -71,14 +71,14 @@ $commentRepositoryInMem->save($comment) ;
 
 
 try{
-     $name=$userRepository->get(new UUID ('b695d14c-6a54-4f38-ad14-740c58537d56'));
+     $name=$userRepository->get(new UUID ('6ca3e4a4-11f3-4dfc-972a-960c9034af8f'));
      echo $name.PHP_EOL;
-    $login=$userRepository->getUserByLogin('Диана');
-    echo $login;
-    $testPost = $postRepository->getById('bb9ba065-cf7d-4455-b456-81c88f409ecf');
-    echo $testPost.PHP_EOL;
-    $comTest = $commentRepository->getById('bff4c1d7-6a88-4fca-8f48-22f5fb80cef8');
-    echo $comTest;
+//    $login=$userRepository->getUserByLogin('Диана');
+//    echo $login;
+//    $testPost = $postRepository->getById('bb9ba065-cf7d-4455-b456-81c88f409ecf');
+//    echo $testPost.PHP_EOL;
+//    $comTest = $commentRepository->getById('bff4c1d7-6a88-4fca-8f48-22f5fb80cef8');
+//    echo $comTest;
 } catch  (Exception $e) {
     echo $e->getMessage();
 }
