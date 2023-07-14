@@ -41,7 +41,7 @@ class CreateComment implements ActionInterface
         }
 
         try {
-            $post=$this->postRepository->get($postUuid);
+            $post=$this->postsRepository->get($postUuid);
         } catch (PostNotFoundException $e) {
             return new ErrorResponse($e->getMessage());
         }

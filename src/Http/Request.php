@@ -105,6 +105,7 @@ class Request
         // Используем встроенную в PHP функцию parse_url
 
         $components = parse_url($this->server['REQUEST_URI']);
+
         if (!is_array($components) || !array_key_exists('path', $components)) {
 
             // Если мы не можем получить путь - бросаем исключение

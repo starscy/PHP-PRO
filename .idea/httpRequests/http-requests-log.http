@@ -1,0 +1,455 @@
+POST http://127.0.0.1:3000/posts/comment
+Content-Length: 155
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "text": "поcт гавно"
+}
+
+<> 2023-07-14T155227.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/comment
+Content-Length: 155
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "text": "поcт гавно"
+}
+
+###
+
+POST http://127.0.0.1:3000/posts/comment
+Content-Length: 155
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "text": "поcт гавно"
+}
+
+###
+
+POST http://127.0.0.1:3000/posts/comment/create
+Content-Length: 154
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "text": "пот гавно"
+}
+
+<> 2023-07-14T154844.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 155
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "title": "пот гавно"
+}
+
+<> 2023-07-14T154815.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 154
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "post_uuid": "b8d0c225-4196-4f02-a6ed-1d1479fe3c62",
+     "text": "пот гавно"
+}
+
+<> 2023-07-14T154803.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 130
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+     "text": "14 июля",
+     "title": "тест на пост"
+}
+
+<> 2023-07-14T154601.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 121
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+     "author_uuid": "98a342bb-877c-432f-88b1-8f864ffc37f1",
+     "text": "some text2!",
+     "title": "s!!d 23wssome"
+}
+
+<> 2023-07-14T154504.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 0
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T154229.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 121
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+"author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+"title": "14 июля",
+"text": "тестируем пост",
+}
+
+<> 2023-07-14T154213.200.json
+
+###
+
+POST http://127.0.0.1:3000/posts/create
+Content-Length: 121
+Content-Type: */*; charset=UTF-8
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+"author_uuid": "6ca3e4a4-11f3-4dfc-972a-960c9034af8f",
+"title": "14 июля",
+"text": "тестируем пост",
+}
+
+<> 2023-07-14T153929.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?username=
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T153911.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?username=
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T143052.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?usernam=
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T143044.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?usernam=
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T143029.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?usernam=
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T143018.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T143007.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?username=starscy
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T134218.200.json
+
+###
+
+GET http://127.0.0.1:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+GET http://127.0.0.1:3000
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+GET http://127.0.0.1:3000/users/show?username=starscy
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T133151.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?username='starscy'
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T133142.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show?username='Ivan'
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T133026.200.json
+
+###
+
+GET http://127.0.0.1:3000/users/show
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T132958.200.json
+
+###
+
+GET http://127.0.0.1:3000/some/path?some_parameter=123
+Some-Header: Some Value
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T132857.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131735.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=12978; XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131732.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=12144; XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131725.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131710.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131701.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T131645.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=17986; XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125732.200.html
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125643.200.html
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125634.200.html
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Cookie: XDEBUG_SESSION=start
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125602.200.html
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125403.200.html
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125349.200.html
+
+###
+
+GET http://localhost:3000/users/show/2
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125225.200.json
+
+###
+
+GET http://localhost:3000/users/show/
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125211.200.json
+
+###
+
+GET http://localhost:3000
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.13 (Java/17.0.5)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-07-14T125013.200.json
+
+###
+

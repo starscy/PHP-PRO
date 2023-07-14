@@ -1,5 +1,6 @@
 <?php
 
+use Starscy\Project\Http\Actions\IndexAction;
 use Starscy\Project\Http\Request;
 use Starscy\Project\Http\SuccessfulResponse;
 use Starscy\Project\models\Exceptions\HttpException;
@@ -16,6 +17,7 @@ use Starscy\Project\Http\ErrorResponse;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+
 // Создаём объект запроса из суперглобальных переменных
 
 $request = new Request(
@@ -27,6 +29,7 @@ $request = new Request(
 $routes = [
 
     'GET' => [
+        '/' => new IndexAction(),
         '/users/show' => new FindByUsername(
             new SqliteUserRepository(
                 new PDO('sqlite:' . __DIR__ . '/db.sqlite')
@@ -103,7 +106,7 @@ try {
     // отправляем неуспешный ответ
 
 if (!array_key_exists($method, $routes)) {
-    (new ErrorResponse('Not found'))->send();
+    (new ErrorResponse('Not found this route with that method'))->send();
     return;
 }
 
@@ -119,13 +122,13 @@ if (!array_key_exists($path, $routes[$method])) {
 $action = $routes[$method][$path];
 
 try {
-
         // Пытаемся выполнить действие,
         // при этом результатом может быть
         // как успешный, так и неуспешный ответ
 
-    $response = $action->handle($request);
-    $response->send();
+        $response = $action->handle($request);
+        $response->send();
+
 } catch (Exception $e) {
 
         // Отправляем неудачный ответ
